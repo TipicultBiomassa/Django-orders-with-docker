@@ -1,0 +1,51 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Тестовое задание Иторум</h1>
+
+<p>Вы можете посмотреть заказы, нажмите кнопку войти, чтобы получить возможность их редактировать.</p>
+
+<table border = '2px'>
+    <thead>
+        <tr>
+            <th colspan="1">Имя заказщика</th>
+            <th colspan="1">Сумма заказа</th>
+            <th colspan="1">Дата заказа</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for a in all_orders %}
+        <tr>
+            <td>{{a.customer_id}}</td>
+            <td>{{a.order_sum}}</td>
+            <td>{{a.order_date}}</td>
+            {% if user.is_authenticated %}
+            <td>
+
+            <form action="{% url 'catalog:order_delete' a.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Delete">
+            </form>
+            </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+
+<h2>Статистика</h2>
+
+<p>Сейчас в базе данных присутствует следующее колличество заказов и заказщиков:</p>
+<ul>
+
+
+<li><strong>Заказы:</strong> {{ num_orders }}</li>
+<li><strong>Заказщики:</strong> {{ num_customers }}</li>
+
+</ul>
+
+
+<p>Вы посещали эту страницу {{ num_visits }} раз.</p>
+
+{% endblock %}

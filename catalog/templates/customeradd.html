@@ -1,0 +1,16 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>{{title}}</h1>
+
+<form action="{% url 'catalog:add_customer' %}" method="post">
+{% csrf_token %}
+{% for f in form1 %}
+<p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>
+<div class="form-error">{{ f.errors }}</div>
+{% endfor %}
+<button type="submit" value="Secret">Добавить заказщика</button>
+</form>
+
+
+{% endblock %}
