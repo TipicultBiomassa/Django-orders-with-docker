@@ -3,7 +3,7 @@
 {% block content %}
 <h1>{{title}}</h1>
 
-<form action="{% url 'catalog:add_customer' %}" method="post">
+<form action="{% url 'catalog:' %}" method="post">
 {% csrf_token %}
 {% for f in form1 %}
 <p><label class="form-label" for="{{ f.id_for_label }}">{{f.label}}: </label>{{ f }}</p>

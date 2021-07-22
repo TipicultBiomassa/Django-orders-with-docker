@@ -29,6 +29,7 @@
      <li><a href="{% url 'admin:index' %}">Админка</a></li>
       <li><a href="{% url 'catalog:add_page' %}">Добавлять заказы нормально</a></li>
       <li><a href="{% url 'catalog:add_customer' %}">Добавлять заказщиков нормально</a></li>
+      <li><a href="{% url 'catalog:json' %}">JSON</a></li>
      <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li>
    {% else %}
      <li><a href="{% url 'login'%}?next={{request.path}}">Войти</a></li>

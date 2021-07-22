@@ -6,7 +6,11 @@ from django.urls import reverse
 from .forms import *
 from .models import Order, Customer
 from django.shortcuts import redirect
-
+from django.contrib.auth.decorators import login_required
+import json
+from django.core import serializers
+from django.http import HttpResponse
+#from REST_FRAMEWORK.renderers import JSONRenderer
 
 def index(request):
     """View function for home page of site."""
@@ -29,6 +33,15 @@ def index(request):
     )
 
 
+@login_required()
+def json(request):
+    data = serializers.serialize('json', Order.objects.all())
+    response = HttpResponse(data, content_type='content_type/json')
+    #response["Content-Disposition"] = 'attachment; filename=export.json'
+    return response
+
+
+@login_required()
 def addpage(request):
     if request.method == 'POST':
         form = AddPostForm(request.POST or None)
@@ -39,7 +52,7 @@ def addpage(request):
     else:
         form = AddPostForm()
     return render(request, './crud.html', {'form': form})
-
+@login_required()
 def addcustomer(request):
     if request.method == 'POST':
         #form1 = AddСustomerForm(request.POST)
@@ -51,7 +64,7 @@ def addcustomer(request):
         form1 = AddСustomerForm()
     return render(request, './customeradd.html', {'form1': form1})
 
-
+@login_required()
 def order_delete(request, pk):
     cat = get_object_or_404(Order, pk=pk)
     if request.method == 'POST':
